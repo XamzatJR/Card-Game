@@ -1,0 +1,104 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+body {
+  background: #282c34;
+  font-family: "Roboto";
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  padding: 0 22px;
+}
+
+.container {
+  max-width: 807px;
+  padding: 70px 15px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.timer {
+  font-size: 50px;
+  color: #fff;
+}
+
+.counter {
+  font-size: 50px;
+  color: #fff;
+}
+.counter span {
+  color: #ffffff31;
+}
+
+.start_btn {
+  background: #567fed;
+  border-radius: 10px;
+  font-size: 30px;
+  padding: 7px 20px;
+  transition: opacity 0.4s ease;
+}
+.start_btn_hide {
+  opacity: 0.5;
+}
+.GameBord {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 35px;
+  gap: 35px;
+  transition: 0.4s ease;
+  perspective: 1000;
+}
+.GameBord_hide {
+  opacity: 0;
+}
+.pointer {
+  cursor: pointer;
+}
+
+.default {
+  cursor: default;
+}
+
+.card {
+  width: 125px;
+  height: 125px;
+  font-size: 18px;
+  color: #000;
+  margin: 0 auto;
+  border-radius: 15px;
+  border: 0;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+.card_active {
+  color: #ffffff31;
+  transform: rotateY(180deg);
+}
+.card_hide {
+  transform: rotateY(180deg);
+}
+.card_front, .card_back {
+  backface-visibility: hidden;
+  transition: transform 0.4s ease;
+}
+.card_front {
+  z-index: 2;
+}
+.card_back {
+  transform: rotateY(180deg);
+  color: #000;
+  font-size: 20px;
+}
