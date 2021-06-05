@@ -2,7 +2,9 @@ const timer = document.querySelector('.timer'),
     startBtn = document.querySelector('.start_btn'),
     gameBoard = document.querySelector('#gameboard'),
     cards = document.querySelectorAll('.card'),
-    counter = document.querySelector('.counter')
+    counter = document.querySelector('.counter'),
+    cardsBack = document.querySelectorAll('.card_back'),
+    cardsArr = ['печение','акула','собака','волк','титан','берсерк','печение','акула','собака','волк','титан','берсерк'];
 
     function clearBoard() {
         cards.forEach(item => {
@@ -10,9 +12,16 @@ const timer = document.querySelector('.timer'),
             item.setAttribute('disabled','disabled');
         })
     }
+    function setBack() {
+        cardsArr.sort(function () { return Math.random() - 0.5; });
+        for (let i = 0; i < cardsBack.length;i++) {
+            cardsBack[i].textContent = cardsArr[i];
+        }
+    }
 
     function startGame() {
         startBtn.addEventListener('click', () => {
+            setBack()
             timer.textContent = Timer()
             gameBoard.classList.remove('GameBord_hide');
             gameBoard.classList.add('GameBord');
@@ -45,6 +54,19 @@ const timer = document.querySelector('.timer'),
         },1000)
 }
 
-
+function onClick() {
+    gameBoard.addEventListener('click', (e) => {
+        const target = e.target;
+        cards.forEach(item => {
+            if (target == item) {
+                item.classList.add('card_active')
+                setTimeout(() => {
+                    item.classList.remove('card_active')
+                    },2250)
+            }
+        })
+    })
+}
+onClick();
 clearBoard()
 startGame();
