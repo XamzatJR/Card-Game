@@ -54,19 +54,58 @@ const timer = document.querySelector('.timer'),
         },1000)
 }
 
-function onClick() {
-    gameBoard.addEventListener('click', (e) => {
-        const target = e.target;
-        cards.forEach(item => {
-            if (target == item) {
-                item.classList.add('card_active')
-                setTimeout(() => {
-                    item.classList.remove('card_active')
-                    },2250)
-            }
-        })
-    })
+let hasActiveCard = false;
+let firstCard, secondCard;
+
+function activateCard() {
+    this.classList.add('card_active')
+    if (!hasActiveCard) {
+        hasActiveCard = true;
+        firstCard = this;
+        return
+    }
+    secondCard = this;
+    hasActiveCard = false;
+   checkCards()
 }
-onClick();
+
+function checkCards() {
+    cards.forEach(item => {
+        if (item != firstCard && item != secondCard) {
+            item.setAttribute('disabled','disabled');
+            item.classList.add('default');
+        }
+    })
+    if (firstCard.textContent == secondCard.textContent) {
+        disableCards()
+    }
+
+    deactivateCard()
+} 
+function disableCards() {
+    firstCard.removeEventListener('click', activateCard)
+    secondCard.removeEventListener('click', activateCard)
+    setTimeout(() => {
+        firstCard.classList.add('card_disable','default')
+        secondCard.classList.add('card_disable','default')
+    },500)
+    
+}
+function deactivateCard() {
+    setTimeout(() => { 
+        cards.forEach(item => {
+            item.removeAttribute('disabled');
+            item.classList.remove('default')
+        })
+        firstCard.classList.remove('card_active','pointer');
+        secondCard.classList.remove('card_active','pointer');
+    }, 1400)
+    
+}
+
+
+cards.forEach(card => card.addEventListener('click', activateCard));
+// 3 стадии: активировать карту, проверить карты, убрать активацию
+// Все поломалось, надо нормально сделать
 clearBoard()
 startGame();

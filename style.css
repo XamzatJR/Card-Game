@@ -102,3 +102,7 @@ header {
   color: #000;
   font-size: 20px;
 }
+.card_disable {
+  opacity: 0;
+  cursor: default;
+}
