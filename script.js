@@ -2,10 +2,11 @@ const timer = document.querySelector('.timer'),
     startBtn = document.querySelector('.start_btn'),
     gameBoard = document.querySelector('#gameboard'),
     cards = document.querySelectorAll('.card'),
-    counter = document.querySelector('.counter'),
+    counter = document.querySelector('#counter'),
     cardsBack = document.querySelectorAll('.card_back'),
     cardsArr = ['печение','акула','собака','волк','титан','берсерк','печение','акула','собака','волк','титан','берсерк'];
-
+    let hasActiveCard = false;
+    let firstCard, secondCard,interval,result,num = 0;
     function clearBoard() {
         cards.forEach(item => {
             item.classList.add('default');
@@ -20,7 +21,10 @@ const timer = document.querySelector('.timer'),
     }
 
     function startGame() {
-        startBtn.addEventListener('click', () => {
+        if (result) result.remove()
+        cards.forEach(card => card.addEventListener('click', activateCard));
+        counter.textContent = 0
+        num = 0;
             setBack()
             timer.textContent = Timer()
             gameBoard.classList.remove('GameBord_hide');
@@ -31,12 +35,11 @@ const timer = document.querySelector('.timer'),
                 item.classList.remove('default')
                 item.classList.add('pointer');
                 item.removeAttribute('disabled');
-            })
-        })  
+            }) 
     }
 
     function Timer(sec = 0, min = 0) {
-        setInterval(() => {
+        interval = setInterval(() => {
             sec++;
             timer.textContent = sec
             if (sec < 10) {
@@ -54,8 +57,6 @@ const timer = document.querySelector('.timer'),
         },1000)
 }
 
-let hasActiveCard = false;
-let firstCard, secondCard;
 
 function activateCard() {
     this.classList.add('card_active')
@@ -77,6 +78,8 @@ function checkCards() {
         }
     })
     if (firstCard.textContent == secondCard.textContent) {
+        num+=2;
+        counter.textContent = num;
         disableCards()
     }
 
@@ -99,13 +102,27 @@ function deactivateCard() {
         })
         firstCard.classList.remove('card_active','pointer');
         secondCard.classList.remove('card_active','pointer');
+        if (counter.textContent == 12) restartGame()
     }, 1400)
     
+    
+}
+function restartGame() {
+    clearInterval(interval);
+    result = document.createElement('div');
+    result.textContent = `Ваш результат: ${timer.textContent}`
+    result.classList.add('result')
+    gameBoard.before(result);
+    startBtn.removeAttribute('disabled')
+    startBtn.classList.remove('start_btn_hide','default');
+    gameBoard.classList.add('GameBord_hide')
+    clearBoard()
+    cards.forEach(item => {
+        item.classList.remove('card_disable')
+    })
 }
 
-
-cards.forEach(card => card.addEventListener('click', activateCard));
-// 3 стадии: активировать карту, проверить карты, убрать активацию
-// Все поломалось, надо нормально сделать
 clearBoard()
-startGame();
+
+startBtn.addEventListener('click', startGame)
+

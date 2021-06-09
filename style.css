@@ -34,11 +34,11 @@ header {
 }
 
 .counter {
+  color: #ffffff31;
   font-size: 50px;
-  color: #fff;
 }
 .counter span {
-  color: #ffffff31;
+  color: #fff;
 }
 
 .start_btn {
@@ -105,4 +105,14 @@ header {
 .card_disable {
   opacity: 0;
   cursor: default;
+}
+.result {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.4s ease;
+  font-size: 30px;
+  text-align: center;
+  color: #fff;
 }
